@@ -1,182 +1,147 @@
-🟩 Green Compute Oracle
-Cryptographic Verification of Sustainable AI Inference
-<div align="center"> <img src="https://img.shields.io/badge/status-alpha-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/focus-sustainability-green?style=for-the-badge" /> <img src="https://img.shields.io/badge/regulation-EU%20AI%20Act-critical?style=for-the-badge" /> </div>
-🌍 Overview
+Green Compute – Oracle for Verifiable Sustainable AI Inference
 
-Modern AI models are growing faster than the planet can sustainably support. While AI is positioned as a tool for climate adaptation and optimization, it is simultaneously accelerating global electricity demand. According to the International Energy Agency (IEA), data centers, AI, and crypto will drive a 75% increase in electricity usage by 2026.
+Modern AI models are growing faster than the planet can sustainably support. While AI offers immense promise for climate adaptation and optimisation, its energy footprint is also rapidly increasing. According to the International Energy Agency (IEA), data-centres, AI workloads and crypto may drive a ~75% increase in global electricity demand by 2026. 
+GitHub
 
 Yet today, enterprises cannot distinguish:
 
-✔ Clean (renewable-powered) inference
-✘ Dirty (fossil-powered) inference
+✅ Clean (renewable-powered) inference
 
-This is the AI-Energy Paradox: AI helps optimize the climate while consuming more energy than ever.
+❌ Dirty (fossil-powered) inference
+This is the “AI-Energy Paradox”.
 
-green-compute is an open-source implementation of the Green Compute Oracle — a verifiable “Proof-of-Green-Inference” protocol that cryptographically attests to the real-time carbon intensity of AI inference workloads.
+What is Green Compute?
 
-This repository contains early prototypes, telemetry utilities, and architectural definitions that will evolve into a decentralized middleware protocol for verifiable sustainable AI.
+Green Compute is an open-source implementation of a Green Compute Oracle — a “Proof-of-Green-Inference” protocol that cryptographically attests to the real-time carbon intensity of AI inference workloads. 
+GitHub
 
-⚠️ Why This Matters Now
-The Regulatory Trigger: EU AI Act
+This repository houses early-stage prototypes: telemetry utilities, architectural definitions and tooling designed to evolve into a decentralised middleware protocol for verifiable sustainable AI.
 
-The EU AI Act is the world’s first comprehensive AI regulatory framework — and it contains a crucial requirement:
+Why it matters & regulatory trigger
 
-Providers of General Purpose AI (GPAI) must report known or estimated energy consumption for both training and inference.
+The upcoming regulatory landscape is tightening: the EU Artificial Intelligence Act (EU AI Act) is the world’s first comprehensive AI framework — and it explicitly requires providers of General Purpose AI (GPAI) to report known or estimated energy consumption for both training and inference. 
+GitHub
 
-Historically, only training emissions were measured.
-Inference (the recurring cost) dominates in real-world deployments.
+Until now, most reporting focused on training emissions. But inference—being recurring and often large-scale—dominates real-world costs and environmental impact. Businesses, auditors and regulators will soon demand verifiable, real-time, location-based carbon-intensity data for every inference job.
 
-Regulators, auditors, and enterprises will soon demand verifiable, real-time, location-based carbon intensity data for every inference job.
+Green Compute exists precisely to help fill that gap.
 
-green-compute exists to provide exactly that.
-
-🧩 Problem Definition
+Problem definition
 
 AI workloads today suffer from three major gaps:
 
-1. Lack of real-time carbon visibility
+Lack of real-time carbon visibility
+Many tools rely on annualised or regional averages—not actual grid carbon intensity at the moment of workload execution. 
+GitHub
 
-Current carbon accounting tools rely on annualized or regional averages — not actual grid carbon intensity at the time of AI workload execution.
-
-2. No cryptographic trust layer
-
-Existing tools like CodeCarbon measure energy, but they don’t prove:
+No cryptographic trust layer
+Current measurement tools (e.g., CodeCarbon) may capture energy usage but cannot reliably prove:
 
 where the workload physically ran
 
 when it ran
 
-the local energy mix at that moment
+what the local energy mix was at that moment
 
-that the record has not been tampered with
+and that the measurement hasn’t been tampered with. 
+GitHub
 
-3. No marketplace for “green compute”
+No marketplace for “green compute”
+Cloud providers cannot reliably differentiate renewable-powered compute from fossil-powered; enterprises cannot confidently verify green claims; regulators cannot enforce compliance. 
+GitHub
 
-Cloud providers cannot differentiate renewable-powered GPU compute.
-Enterprises cannot verify green claims.
-Regulators cannot enforce compliance.
+The Green Compute Oracle pipeline
 
-🛠️ The Green Compute Oracle
+The system implements a three-stage pipeline: Measure → Verify → Attest. 
+GitHub
 
-The system implements a Measure → Verify → Attest pipeline:
+Measure (Granular Telemetry)
 
-1. Measure (Granular Telemetry)
+Side-car agents capture per-inference metrics: GPU utilisation, power draw (wattage), token-by-token compute footprint, runtime metadata.
 
-Sidecar agents capture per-inference metrics:
+Built with open standards (e.g., the Green Software Foundation’s SCI specification). 
+GitHub
 
-GPU utilization
+Verify (Spatiotemporal Anchoring)
 
-Power draw (wattage)
+A Trusted Execution Environment (TEE) or Proof-of-Physical-Work (PoPW) mechanism proves the physical location of the compute node, the timestamp of inference, and the integrity of telemetry data.
 
-Token-by-token compute footprint
+This is cross-checked with real-time grid carbon intensity APIs (e.g., Electricity Maps, WattTime). 
+GitHub
 
-Runtime metadata
+Attest (On-Chain Certificate)
 
-Built on open standards such as the Green Software Foundation’s SCI specification.
+The system mints a verifiable credential (or dynamic NFT) capturing: energy consumption, carbon intensity, timestamp, location, and proof of measurement integrity.
 
-2. Verify (Spatiotemporal Anchoring)
+Becomes an immutable audit trail for ESG reporting, regulatory filings (CSRD, EU AI Act, SEC Climate Rule), carbon-marketplace integrations. 
+GitHub
 
-A Trusted Execution Environment (TEE) or Proof-of-Physical-Work mechanism proves:
-
-physical location of the compute node
-
-timestamp of inference
-
-integrity of telemetry data
-
-This is cross-checked with real-time grid carbon intensity APIs (e.g., Electricity Maps, WattTime).
-
-3. Attest (On-Chain Certificate)
-
-The system mints a verifiable credential (or dynamic NFT) that encodes:
-
-energy consumption
-
-carbon intensity
-
-timestamp
-
-location
-
-proof of measurement integrity
-
-This becomes an immutable audit trail for:
-
-ESG reporting
-
-regulatory filings (CSRD, EU AI Act, SEC Climate Rule)
-
-carbon marketplace integrations
-
-🧱 Repository Structure
+Repository Structure
 green-compute/
-│
-├── /src/
+├── src/
 │   ├── telemetry/        # Metric collectors and SCI-based measurement logic
 │   ├── verifier/         # TEE + grid-intensity verification logic
 │   ├── attestation/      # Verifiable credential minting
 │   └── utils/
-│
-├── /examples/            # Minimal examples for instrumenting inference engines
-├── /specs/               # Protocol definitions, schemas, and documentation
-├── /research/            # Whitepapers, notes, regulatory analysis
+│       ├── examples/     # Minimal examples for instrumenting inference engines
+├── specs/                # Protocol definitions, schemas, documentation
+├── research/             # Whitepapers, notes, regulatory analysis
 └── README.md
 
 
-Note: This is an early-stage research prototype. Modules will be reorganized as the protocol matures.
+Note: This is still an early-stage research prototype. Modules will be reorganised as the protocol matures. 
+GitHub
 
-🔬 Architectural Diagram (High-Level)
-+----------------------+      +-----------------------+      +-----------------------------+
-|  Inference Engine    | ---> |  Telemetry Sidecar    | ---> |  Grid Data (Carbon API)     |
-| (vLLM, TensorRT-LLM) |      | (GPU Metrics, SCI)    |      | (Electricity Maps, etc.)    |
-+----------------------+      +-----------------------+      +-----------------------------+
-                                      |                                   |
-                                      v                                   |
-                            +----------------------+                      |
-                            | Trusted Verification | <--------------------+
-                            |  (TEE / PoPW)        |
-                            +----------------------+
-                                      |
-                                      v
-                          +--------------------------+
-                          | On-Chain Attestation     |
-                          | (Green Compute Cert)     |
-                          +--------------------------+
+Architectural Diagram (High-Level)
+Inference Engine (vLLM, TensorRT-LLM)
+        ↓
+Telemetry Side-car (GPU metrics, SCI)
+        ↓
+Grid Data (Carbon API)
+        ↓
+Trusted Verification (TEE / PoPW)
+        ↓
+On-Chain Attestation (Green Compute Certificate)
 
-⚡ Performance Philosophy
 
-Inference is latency-sensitive. Verification is not.
+GitHub
 
-To avoid slowdowns:
+Performance Philosophy
 
-Attestation is asynchronous
+Inference workloads are latency-sensitive. Verification and attestation pipelines shouldn’t slow them down. So:
 
-Inference does not block
+Attestation is asynchronous; inference does not block.
 
-Certificates are delivered post-hoc
+Certificate minting happens post-hoc, avoiding inference delay. 
+GitHub
 
-High-throughput workloads (batches) gain the most value
+High-throughput workloads (e.g., batches) stand to gain most.
 
-🧭 Roadmap
-Phase 1 — Measurement Layer
+Roadmap
+
+Phase 1 – Measurement Layer
 
 SCI-compliant telemetry
 
-GPU power draw estimators & direct hardware probes
+GPU power-draw estimators & direct hardware probes
 
-Token-level energy measurement prototype
+Token-level energy-measurement prototype
 
-Phase 2 — Verification Layer
+GitHub
+
+Phase 2 – Verification Layer
 
 TEE-based proof-of-location
 
-Millisecond-level synchronization with grid APIs
+Millisecond-level sync with grid APIs
 
 Anti-tamper logs & hashing
 
-Phase 3 — Attestation Layer
+GitHub
 
-Verifiable credentials schema
+Phase 3 – Attestation Layer
+
+Verifiable credential schema
 
 Green Compute Certificate v1
 
@@ -184,59 +149,27 @@ Low-carbon chain deployment
 
 API for enterprise ESG integration
 
-🛡️ Risk & Mitigation
-Technical Risk — Overhead
+GitHub
 
-Mitigation: async verification; zero-latency inference path
-
-Adoption Risk — Greenwashing
-
-Mitigation: follow ISO/IEC 21031:2024 SCI standard
-
-Strict location-based carbon labeling
-
-Reject unverifiable offsets
-
-Regulatory Divergence
-
-Mitigation: multi-framework rule engine for CSRD, SEC, and EU AI Act compliance
-
-🧑‍🤝‍🧑 Who Is This For?
+Who Is This For?
 
 AI infrastructure companies
 
-Cloud providers offering renewable-backed compute
+Cloud providers offering renewable-backed GPU/TPU compute
 
-Enterprises under Net Zero mandates
+Enterprises under Net-Zero or ESG mandates
 
-LLM developers needing ESG compliance
+LLM / AI-Inference developers needing ESG compliance
 
-Regulators/auditors requiring verifiable energy data
+Regulators and auditors demanding verifiable energy-data for inference
 
-🚀 Getting Started (Early Prototype)
-git clone https://github.com/swarit-1/green-compute
+GitHub
+
+Getting Started (Early Prototype)
+git clone https://github.com/swarit-1/green-compute.git
 cd green-compute
 pip install -r requirements.txt
 
 
-(Current prototype includes experimental measurement and verification modules — not production-ready.)
-
-🤝 Contributing
-
-We welcome:
-
-researchers
-
-sustainability engineers
-
-cryptographers
-
-AI infra developers
-
-auditors & policy experts
-
-Feel free to open issues, propose architectural improvements, or contribute telemetry integrations.
-
-📜 License
-
-MIT — open source and freely reusable.
+⚠️ Current prototype includes experimental measurement and verification modules — not production-ready. 
+GitHub
